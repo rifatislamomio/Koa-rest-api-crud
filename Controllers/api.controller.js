@@ -1,5 +1,6 @@
 const { posts } = require('../Model/posts.model')
 
+
 const getAPIHome = (ctx) => {
     ctx.body = {
         status: 200,
@@ -33,6 +34,19 @@ const getPostById = (ctx) => {
     }
 }
 
+
+const addPost = (ctx) => {
+    var post = ctx.request.body
+    post.id = posts[posts.length - 1].id + 1
+    posts.push(post)
+    ctx.body = {
+        message: "Success",
+        status: 201,
+        post
+    }
+}
+
 module.exports.getAPIHome = getAPIHome;
 module.exports.getAllPosts = getAllPosts;
 module.exports.getPostById = getPostById;
+module.exports.addPost = addPost;
