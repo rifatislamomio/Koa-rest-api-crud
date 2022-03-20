@@ -9,9 +9,17 @@ const getAPIHome = (ctx) => {
 }
 
 const getAllPosts = (ctx) => {
-    ctx.body = {
-        status: 200,
-        posts: posts
+    const max = parseInt(ctx.request.query.max) //Max (n) numbers of posts
+    if (max) {
+        ctx.body = {
+            status: 200,
+            posts: posts.slice(0, max)
+        }
+    } else {
+        ctx.body = {
+            status: 200,
+            posts: posts
+        }
     }
 }
 
