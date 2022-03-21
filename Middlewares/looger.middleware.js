@@ -1,7 +1,4 @@
 const fs = require('fs')
-var path = require("path")
-var target = "../Logs/"
-var resolved = path.relative(__dirname, target)
 const logger = (ctx, next) => {
     const log = {
         method: ctx.method,
@@ -12,8 +9,9 @@ const logger = (ctx, next) => {
     }
     const logMessage = `Date: ${log.date} Time: ${log.time} method: ${log.method} url: ${log.url} origin: ${log.origin} \n`
 
+    console.log(logMessage)
     //Saving logs to a file
-    fs.appendFile(path.join(resolved,'logs.txt'), logMessage, (err) => {
+    fs.appendFile('logs.txt', logMessage, (err) => {
         if (err) throw err;
     })
     next();

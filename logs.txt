@@ -1,3 +1,2 @@
-Date: 3/21/2022 Time: 7:57:00 PM method: GET url: /posts origin: http://localhost:8080 
-Date: 3/21/2022 Time: 7:57:02 PM method: GET url: /posts origin: http://localhost:8080 
-Date: 3/21/2022 Time: 7:57:18 PM method: GET url: /posts origin: http://localhost:8080 
+Date: 3/21/2022 Time: 8:30:04 PM method: GET url: /posts origin: http://localhost:8080 
+Date: 3/21/2022 Time: 8:30:15 PM method: GET url: /posts?max=1 origin: http://localhost:8080 
