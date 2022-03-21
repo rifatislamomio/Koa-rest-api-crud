@@ -1,5 +1,5 @@
 const { posts } = require('../Model/posts.model')
-
+const fs = require('fs');
 
 const getAPIHome = (ctx) => {
     ctx.body = {
@@ -97,9 +97,16 @@ const updateById = (ctx) => {
     }
 }
 
+
+const getVideoStream = (ctx) => {
+    const fileStream = fs.createReadStream("video_file.mp4")
+    ctx.body = fileStream
+}
+
 module.exports.getAPIHome = getAPIHome;
 module.exports.getAllPosts = getAllPosts;
 module.exports.getPostById = getPostById;
 module.exports.addPost = addPost;
 module.exports.deleteById = deleteById;
 module.exports.updateById = updateById;
+module.exports.getVideoStream = getVideoStream;

@@ -5,7 +5,8 @@ const { getAPIHome,
     getPostById,
     addPost,
     deleteById,
-    updateById } = require('../Controllers/api.controller')
+    updateById,
+    getVideoStream } = require('../Controllers/api.controller')
 const { postValidatorMiddleware } = require('../Middlewares/postValidator.middleware')
 
 //Api home
@@ -20,5 +21,6 @@ router.post('/new', postValidatorMiddleware, addPost);
 router.delete('/remove/:id', deleteById);
 //Update post by id
 router.put('/edit/:id', updateById);
-
+//Stream video file
+router.get('/watch', getVideoStream);
 module.exports = router
