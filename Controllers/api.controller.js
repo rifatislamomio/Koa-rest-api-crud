@@ -1,5 +1,8 @@
 const { posts } = require('../Model/posts.model')
 const fs = require('fs');
+const { postSchema } = require('../Model/Schemas/postsdb.schemas')
+const mongoose = require('mongoose')
+const postModel = new mongoose.model("Post", postSchema); //ODM
 
 const getAPIHome = (ctx) => {
     ctx.body = {
@@ -21,6 +24,29 @@ const getAllPosts = (ctx) => {
             posts: posts
         }
     }
+}
+
+
+
+const getAllPostsFromDb = async (ctx) => {
+    try {
+        const max = parseInt(ctx.request.query.max) //Max (n) numbers of posts
+        await postModel.find({}).limit(max)
+            .then((posts) => {
+                ctx.body = {
+                    status: 200,
+                    posts: posts
+                }
+            })
+    } catch (error) {
+        console.log(error)
+        ctx.body = {
+            status: 404,
+            message: "Failed"
+        }
+
+    }
+
 }
 
 const getPostById = (ctx) => {
@@ -51,6 +77,24 @@ const addPost = (ctx) => {
         message: "Success",
         status: 201,
         post
+    }
+}
+
+
+const addPostToDb = async (ctx) => {
+    try {
+        const post = await postModel.create(ctx.request.body)
+        ctx.body = {
+            message: "Success",
+            status: 201,
+            post
+        }
+    } catch (error) {
+        ctx.body = {
+            message: "Failed",
+            status: 408,
+        }
+        console.log(error)
     }
 }
 
@@ -110,3 +154,6 @@ module.exports.addPost = addPost;
 module.exports.deleteById = deleteById;
 module.exports.updateById = updateById;
 module.exports.getVideoStream = getVideoStream;
+
+module.exports.addPostToDb = addPostToDb;
+module.exports.getAllPostsFromDb = getAllPostsFromDb;

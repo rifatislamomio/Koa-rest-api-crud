@@ -6,7 +6,9 @@ const { getAPIHome,
     addPost,
     deleteById,
     updateById,
-    getVideoStream } = require('../Controllers/api.controller')
+    getVideoStream,
+    addPostToDb,
+    getAllPostsFromDb } = require('../Controllers/api.controller')
 const { postValidatorMiddleware } = require('../Middlewares/postValidator.middleware')
 
 //Api home
@@ -23,4 +25,13 @@ router.delete('/remove/:id', deleteById);
 router.put('/edit/:id', updateById);
 //Stream video file
 router.get('/watch', getVideoStream);
+
+//Cloud integrated Api routes
+//Get all posts
+router.get('/api/posts', getAllPostsFromDb);
+//Add a new post
+router.post('/api/new', postValidatorMiddleware, addPostToDb);
+
+
+
 module.exports = router

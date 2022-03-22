@@ -7,6 +7,12 @@ const PORT = process.env.PORT || 8080
 require('dotenv').config()
 const { getAPIHome } = require('./Controllers/api.controller')
 const { loggerMiddleWare } = require('./Middlewares/looger.middleware')
+const mongoose = require('mongoose')
+
+//Database connection with mongoose
+mongoose.connect(process.env.MONGO_URL)
+    .then(() => console.log("MongoDB Connected"))
+    .catch(err => console.log(err))
 
 app.use(koaBody())
 app.use(json())
