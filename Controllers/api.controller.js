@@ -1,6 +1,6 @@
 const { posts } = require('../Model/posts.model')
 const fs = require('fs');
-const postSchema = require('../Model/Schemas/postsdb.schemas')
+const postSchema = require('../Model/postsdb.model')
 const mongoose = require('mongoose')
 const postModel = new mongoose.model("Post", postSchema); //ODM
 
@@ -26,11 +26,10 @@ const getAllPosts = (ctx) => {
     }
 }
 
-
 const getAllPostsFromDb = async (ctx) => {
     var max = parseInt(ctx.request.query.max)  //Max (n) numbers of posts
     max = max ? max : 0
-    const data = await postModel.find({}).limit(max)
+    await postModel.find({}).limit(max)
         .then(data => {
             ctx.body = {
                 status: 200,
@@ -62,7 +61,6 @@ const getPostById = (ctx) => {
     }
 }
 
-
 const addPost = (ctx) => {
     var post = ctx.request.body
     post.id = posts[posts.length - 1].id + 1
@@ -73,7 +71,6 @@ const addPost = (ctx) => {
         post
     }
 }
-
 
 const addPostToDb = async (ctx) => {
     console.log("addPostToDb")
@@ -93,7 +90,6 @@ const addPostToDb = async (ctx) => {
     }
 }
 
-
 const deleteById = (ctx) => {
     const id = parseInt(ctx.request.params.id)
     var index = posts.findIndex(post => { return post.id == id })
@@ -112,7 +108,6 @@ const deleteById = (ctx) => {
         }
     }
 }
-
 
 const updateById = (ctx) => {
     const id = parseInt(ctx.request.params.id)
@@ -135,7 +130,6 @@ const updateById = (ctx) => {
         }
     }
 }
-
 
 const getVideoStream = (ctx) => {
     const fileStream = fs.createReadStream("video_file.mp4")
