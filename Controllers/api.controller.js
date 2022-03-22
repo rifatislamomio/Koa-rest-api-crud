@@ -1,6 +1,6 @@
 const { posts } = require('../Model/posts.model')
 const fs = require('fs');
-const { postSchema } = require('../Model/Schemas/postsdb.schemas')
+const postSchema = require('../Model/Schemas/postsdb.schemas')
 const mongoose = require('mongoose')
 const postModel = new mongoose.model("Post", postSchema); //ODM
 
@@ -27,25 +27,20 @@ const getAllPosts = (ctx) => {
 }
 
 
-
 const getAllPostsFromDb = async (ctx) => {
-    console.log("getAllPostsFromDb")
-    try {
-        const max = parseInt(ctx.request.query.max) //Max (n) numbers of posts
-        await postModel.find({})
-            .then((posts) => {
-                ctx.body = {
-                    status: 200,
-                    posts: posts
-                }
-            })
-    } catch (error) {
-        console.log(error)
-        ctx.body = {
-            status: 404,
-            message: "Failed"
-        }
-    }
+    var max = parseInt(ctx.request.query.max)  //Max (n) numbers of posts
+    max = max ? max : 0
+    const data = await postModel.find({}).limit(max)
+        .then(data => {
+            ctx.body = {
+                status: 200,
+                posts: data
+            }
+            console.log(data.length);
+        })
+        .catch(error => {
+            console.log(error)
+        })
 }
 
 const getPostById = (ctx) => {

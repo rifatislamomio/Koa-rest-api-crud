@@ -18,7 +18,6 @@ app.use(koaBody())
 app.use(json())
 app.use(loggerMiddleWare)
 app.use(koaRouter.routes())
-    .use(koaRouter.allowedMethods())
 // app.use(getAPIHome) //Default route
 
 

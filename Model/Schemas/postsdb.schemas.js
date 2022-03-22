@@ -11,4 +11,4 @@ const postSchema = mongoose.Schema({
     },
 })
 
-module.exports.postSchema = postSchema
+module.exports = postSchema

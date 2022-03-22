@@ -9,7 +9,7 @@ const logger = (ctx, next) => {
     }
     const logMessage = `Date: ${log.date} Time: ${log.time} method: ${log.method} url: ${log.url} origin: ${log.origin} \n`
 
-    console.log(logMessage)
+    // console.log(logMessage)
     //Saving logs to a file
     fs.appendFile('logs.txt', logMessage, (err) => {
         if (err) throw err;
