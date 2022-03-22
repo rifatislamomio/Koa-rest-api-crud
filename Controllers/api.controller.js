@@ -29,9 +29,10 @@ const getAllPosts = (ctx) => {
 
 
 const getAllPostsFromDb = async (ctx) => {
+    console.log("getAllPostsFromDb")
     try {
         const max = parseInt(ctx.request.query.max) //Max (n) numbers of posts
-        await postModel.find({}).limit(max)
+        await postModel.find({})
             .then((posts) => {
                 ctx.body = {
                     status: 200,
@@ -44,9 +45,7 @@ const getAllPostsFromDb = async (ctx) => {
             status: 404,
             message: "Failed"
         }
-
     }
-
 }
 
 const getPostById = (ctx) => {
@@ -82,6 +81,7 @@ const addPost = (ctx) => {
 
 
 const addPostToDb = async (ctx) => {
+    console.log("addPostToDb")
     try {
         const post = await postModel.create(ctx.request.body)
         ctx.body = {

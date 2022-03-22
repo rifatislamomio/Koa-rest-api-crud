@@ -30,8 +30,7 @@ router.get('/watch', getVideoStream);
 //Get all posts
 router.get('/api/posts', getAllPostsFromDb);
 //Add a new post
-router.post('/api/new', postValidatorMiddleware, addPostToDb);
-
+router.post('/api/new', addPostToDb);
 
 
 module.exports = router
