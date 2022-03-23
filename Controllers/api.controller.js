@@ -103,7 +103,7 @@ const deleteById = (ctx) => {
 
     if (index != -1) {
         posts.splice(index, 1) //deleteing from array
-        ctx.status = 201
+        ctx.status = 200
         ctx.body = {
             message: "Success",
             status: 201
@@ -120,18 +120,28 @@ const deleteById = (ctx) => {
 
 const deleteByIdInDb = async (ctx) => {
     const id = ctx.request.params.id
-    try {
-        await postModel.deleteOne({ _id: id })
-        ctx.status = 200
-        ctx.body = {
-            message: "Success",
-            status: 200
+    const post = await postModel.find({ _id: id }).limit(1)
+    if (post.length) {
+        try {
+            await postModel.deleteOne({ _id: id })
+            ctx.status = 200
+            ctx.body = {
+                message: "Success",
+                status: 200
+            }
+        } catch (error) {
+            ctx.status = 404
+            ctx.body = {
+                status: 404,
+                message: 'Failed to delete'
+            }
         }
-    } catch (error) {
+    }
+    else {
         ctx.status = 404
         ctx.body = {
             status: 404,
-            message: 'Failed to delete'
+            message: 'Not existed'
         }
     }
 }
