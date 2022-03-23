@@ -1,3 +1,4 @@
+//Mock data storage
 exports.posts =
     [
         {

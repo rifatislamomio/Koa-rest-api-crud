@@ -75,7 +75,6 @@ const addPost = (ctx) => {
 }
 
 const addPostToDb = async (ctx) => {
-    console.log("addPostToDb")
     try {
         const post = await postModel.create(ctx.request.body)
         ctx.body = {
@@ -94,7 +93,7 @@ const addPostToDb = async (ctx) => {
 
 const deleteById = (ctx) => {
     const id = parseInt(ctx.request.params.id)
-    var index = posts.findIndex(post => { return post.id == id })
+    let index = posts.findIndex(post => { return post.id == id })
 
     if (index != -1) {
         posts.splice(index, 1) //deleteing from array
@@ -113,9 +112,9 @@ const deleteById = (ctx) => {
 
 const updateById = (ctx) => {
     const id = parseInt(ctx.request.params.id)
-    var index = posts.findIndex(post => { return post.id == id })
+    let index = posts.findIndex(post => { return post.id == id })
     if (index != -1) {
-        var body = ctx.request.body
+        let body = ctx.request.body
         posts[index].body = body.body ? body.body : posts[index].body;
         posts[index].title = body.title ? body.title : posts[index].title;
 
