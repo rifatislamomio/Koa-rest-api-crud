@@ -169,6 +169,43 @@ const updateById = (ctx) => {
     }
 }
 
+
+const updateByIdInDb = async (ctx) => {
+    const id = ctx.request.params.id
+    let post = await postModel.find({ _id: id }).limit(1)
+    if (post.length) {
+        try {
+            let body = ctx.request.body
+            post[0].title = body.title ? body.title : post.title
+            post[0].body = body.body ? body.body : post.body
+
+            await postModel.create(post)
+
+            ctx.status = 200
+            ctx.body = {
+                message: "Updated",
+                status: 200,
+                post: post
+            }
+        } catch (error) {
+            ctx.status = 404
+            ctx.body = {
+                status: 404,
+                message: 'Failed to update'
+            }
+        }
+    }
+    else {
+        ctx.status = 404
+        ctx.body = {
+            status: 404,
+            message: 'Not found'
+        }
+    }
+}
+
+
+
 const getVideoStream = (ctx) => {
     const fileStream = fs.createReadStream("video_file.mp4")
     ctx.body = fileStream
@@ -185,3 +222,4 @@ module.exports.getVideoStream = getVideoStream;
 module.exports.addPostToDb = addPostToDb;
 module.exports.getAllPostsFromDb = getAllPostsFromDb;
 module.exports.deleteByIdInDb = deleteByIdInDb;
+module.exports.updateByIdInDb = updateByIdInDb;
