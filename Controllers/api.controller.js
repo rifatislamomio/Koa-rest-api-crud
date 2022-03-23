@@ -7,7 +7,7 @@ const postModel = new mongoose.model("Post", postSchema); //ODM
 const getAPIHome = (ctx) => {
     ctx.body = {
         status: 200,
-        message: "Hello from API home!"
+        message: "Redirected to API home!"
     }
 }
 
@@ -36,7 +36,6 @@ const getAllPostsFromDb = async (ctx) => {
         .catch(error => {
             console.log(error)
         })
-    
     ctx.status = 200
     ctx.body = {
         status: 200,
@@ -110,6 +109,22 @@ const deleteById = (ctx) => {
     }
 }
 
+const deleteByIdInDb = async (ctx) => {
+    const id = ctx.request.params.id
+    try {
+        await postModel.deleteOne({ _id: id })
+        ctx.body = {
+            message: "Success",
+            status: 202
+        }
+    } catch (error) {
+        ctx.body = {
+            status: 404,
+            message: 'Failed to delete'
+        }
+    }
+}
+
 const updateById = (ctx) => {
     const id = parseInt(ctx.request.params.id)
     let index = posts.findIndex(post => { return post.id == id })
@@ -147,3 +162,4 @@ module.exports.getVideoStream = getVideoStream;
 
 module.exports.addPostToDb = addPostToDb;
 module.exports.getAllPostsFromDb = getAllPostsFromDb;
+module.exports.deleteByIdInDb = deleteByIdInDb;

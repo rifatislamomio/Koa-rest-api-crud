@@ -16,7 +16,6 @@ app.use(loggerMiddleWare)
 app.use(koaRouter.routes())
 app.use(getAPIHome) //Default route
 
-
 app.listen(PORT, () => {
     console.log(`Listening to: http://localhost:${PORT}`)
 })
