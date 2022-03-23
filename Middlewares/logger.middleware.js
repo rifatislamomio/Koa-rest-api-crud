@@ -1,5 +1,5 @@
 const fs = require('fs')
-const logger = (ctx, next) => {
+const logger = async (ctx, next) => {
     const log = {
         method: ctx.method,
         url: ctx.url,
@@ -14,7 +14,7 @@ const logger = (ctx, next) => {
     fs.appendFile('logs.txt', logMessage, (err) => {
         if (err) throw err;
     })
-    next();
+    await next();
 }
 
 module.exports.loggerMiddleWare = logger;

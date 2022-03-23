@@ -29,17 +29,19 @@ const getAllPosts = (ctx) => {
 const getAllPostsFromDb = async (ctx) => {
     var max = parseInt(ctx.request.query.max)  //Max (n) numbers of posts
     max = max ? max : 0
-    await postModel.find({}).limit(max)
+    var data = await postModel.find({}).limit(max)
         .then(data => {
-            ctx.body = {
-                status: 200,
-                posts: data
-            }
-            console.log(data.length);
+            return data
         })
         .catch(error => {
             console.log(error)
         })
+    
+    ctx.status = 200
+    ctx.body = {
+        status: 200,
+        posts: data
+    }
 }
 
 const getPostById = (ctx) => {
