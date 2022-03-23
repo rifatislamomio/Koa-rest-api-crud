@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const postModel = new mongoose.model("Post", postSchema); //ODM
 
 const getAPIHome = (ctx) => {
+    ctx.status = 200
     ctx.body = {
         status: 200,
         message: "Redirected to API home!"
@@ -24,6 +25,7 @@ const getAllPosts = (ctx) => {
             posts: posts
         }
     }
+    ctx.status = 200
 }
 
 const getAllPostsFromDb = async (ctx) => {
@@ -47,6 +49,7 @@ const getPostById = (ctx) => {
     const id = parseInt(ctx.request.params.id)
     var post = posts.filter(post => post.id === id)
     if (post) {
+        ctx.status = 200
         ctx.body = {
             status: 200,
             posts: post,
@@ -54,6 +57,7 @@ const getPostById = (ctx) => {
         }
     }
     else {
+        ctx.status = 404
         ctx.body = {
             status: 404,
             posts: [],
@@ -66,6 +70,7 @@ const addPost = (ctx) => {
     var post = ctx.request.body
     post.id = posts[posts.length - 1].id + 1
     posts.push(post)
+    ctx.status = 201
     ctx.body = {
         message: "Success",
         status: 201,
@@ -76,12 +81,14 @@ const addPost = (ctx) => {
 const addPostToDb = async (ctx) => {
     try {
         const post = await postModel.create(ctx.request.body)
+        ctx.status = 201
         ctx.body = {
             message: "Success",
             status: 201,
             post
         }
     } catch (error) {
+        ctx.status = 408
         ctx.body = {
             message: "Failed",
             status: 408,
@@ -96,12 +103,14 @@ const deleteById = (ctx) => {
 
     if (index != -1) {
         posts.splice(index, 1) //deleteing from array
+        ctx.status = 201
         ctx.body = {
             message: "Success",
             status: 201
         }
     }
     else {
+        ctx.status = 404
         ctx.body = {
             status: 404,
             message: 'Failed to delete'
@@ -113,11 +122,13 @@ const deleteByIdInDb = async (ctx) => {
     const id = ctx.request.params.id
     try {
         await postModel.deleteOne({ _id: id })
+        ctx.status = 200
         ctx.body = {
             message: "Success",
-            status: 202
+            status: 200
         }
     } catch (error) {
+        ctx.status = 404
         ctx.body = {
             status: 404,
             message: 'Failed to delete'
@@ -132,7 +143,7 @@ const updateById = (ctx) => {
         let body = ctx.request.body
         posts[index].body = body.body ? body.body : posts[index].body;
         posts[index].title = body.title ? body.title : posts[index].title;
-
+        ctx.status = 204
         ctx.body = {
             message: "Success",
             status: 204,
@@ -140,6 +151,7 @@ const updateById = (ctx) => {
         }
     }
     else {
+        ctx.status = 404
         ctx.body = {
             status: 404,
             message: 'Failed to update'
