@@ -6,7 +6,7 @@ const postModel = new mongoose.model("Post", postSchema); //ODM
 const { Worker } = require('worker_threads')
 
 const getAPIHome = (ctx) => {
-    //const worker = new Worker("../Workers/data.workers.js")
+    //const worker = new Worker(require('path').resolve(__dirname, '../Workers/dataFiller.workers'))
     ctx.status = 200
     ctx.body = {
         status: 200,

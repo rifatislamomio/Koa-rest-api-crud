@@ -1,6 +1,4 @@
 .env
 node_modules
-video_file.mp4
 logs.txt
 config.json
-Workers/data.workers.js
